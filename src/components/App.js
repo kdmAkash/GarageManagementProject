@@ -10,7 +10,6 @@ import ShowUser from "./ShowUser";
 import AddPartInfo from "./AddPartInfo";
 import ShowPartInfo from "./ShowPartInfo";
 import UpdateParts from "./UpdateParts";
-import BillPage from "../../BillPage";
 
 const App = () => {
     return (
