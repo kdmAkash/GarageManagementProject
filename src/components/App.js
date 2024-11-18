@@ -16,7 +16,6 @@ const App = () => {
         <div className="container">
             <Header/>
             <Outlet/>
-            <BillPage/>
         </div>
     );
 }
