@@ -9,13 +9,15 @@ import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import ShowUser from "./ShowUser";
 import AddPartInfo from "./AddPartInfo";
 import ShowPartInfo from "./ShowPartInfo";
+import UpdateParts from "./UpdateParts";
+import BillPage from "../../BillPage";
 
 const App = () => {
     return (
         <div className="container">
             <Header/>
             <Outlet/>
-            <ShowPartInfo/>
+            <BillPage/>
         </div>
     );
 }
@@ -40,6 +42,18 @@ const appRouter=createBrowserRouter([
             {
                 path:"/showuser",
                 element:<ShowUser/>
+            },
+            {
+                path:"/updateparts",
+                element:<UpdateParts/>,
+            },
+            {
+                path:"/addparts",
+                element:<AddPartInfo/>,
+            },
+            {
+                path:"/showparts",
+                element:<ShowPartInfo/>,
             }
         ],
         errorElement: <Error/>,

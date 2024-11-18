@@ -7,7 +7,8 @@ const AddPartInfo =() =>{
     category:'',
     quantity:'',
     supplier_name:'',
-    price:''
+    price:'',
+    date:''
   });
 
   const handleChange=(e)=>{
@@ -50,7 +51,8 @@ const AddPartInfo =() =>{
       category:'',
       quantity:'',
       supplier_name:'',
-      price:''
+      price:'',
+      date:''
     })
   }
   return(
@@ -76,6 +78,10 @@ const AddPartInfo =() =>{
       <div className="form-group ">
         <label>Price</label>
         <input type="number" name="price" value={formData.price} onChange={handleChange}/>
+      </div>
+      <div className="form-group ">
+        <label>Date</label>
+        <input type="date" name="date" value={formData.date} onChange={handleChange}/>
       </div>
       <div className="form-buttons">
         <button type="submit" className="save-btn">Save</button>
