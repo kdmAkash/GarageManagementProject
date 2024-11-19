@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Garage project",
   "scripts": {
-    "start": "parcel index.html",
+    "frontend": "parcel index.html",
+    "backend": "node src/components/server.js",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "build": "parcel build index.html"
   },
   "keywords": [
@@ -14,6 +16,7 @@
   "devDependencies": {
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "concurrently": "^9.1.0",
     "crypto-browserify": "^3.12.1",
     "events": "^3.3.0",
     "parcel": "^2.12.0",
