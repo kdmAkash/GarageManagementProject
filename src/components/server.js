@@ -4,9 +4,9 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 const cron = require("node-cron");
-require('dotenv').config();
+//require('dotenv').config();
 
-const client = require("twilio")(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+//const client = require("twilio")(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 // Enable CORS for the React frontend (localhost:1234)
 app.use(cors({
@@ -225,7 +225,7 @@ const sendMessages = () => {
 //sendMessages();
 
 // Optional: Run cron job every day at midnight
-cron.schedule("*/1 * * * *", sendMessages);
+//cron.schedule("*/1 * * * *", sendMessages);
 
 // To keep the script running and continuously check cron jobs
 process.on("SIGINT", () => {
