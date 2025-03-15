@@ -167,3 +167,127 @@ table tbody tr:hover {
   margin-left: 10px;
   padding-left: 10px;
 }
+
+/* OrderForm container */
+.order-form-container {
+  width: 350px;
+  margin: auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Styling for form groups inside OrderForm */
+.order-form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Error message styling */
+.order-form-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Button styles */
+.order-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  width: 48%;
+}
+
+.submit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Success message styling */
+.success-message {
+  padding: 10px;
+  background-color: #e8f5e9;
+  border: 1px solid #388e3c;
+  border-radius: 4px;
+  color: #388e3c;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Adjust form width and layout for smaller screens */
+@media (max-width: 768px) {
+  .order-form-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .order-form-buttons {
+    flex-direction: column;
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

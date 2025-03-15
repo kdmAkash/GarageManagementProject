@@ -24,3 +24,5 @@ yarn-error.log*
 GarageManagementProject/
 dist/
 Billpage.js
+postsql.js
+mangodb.js

@@ -10,7 +10,7 @@ import ShowUser from "./ShowUser";
 import AddPartInfo from "./AddPartInfo";
 import ShowPartInfo from "./ShowPartInfo";
 import UpdateParts from "./UpdateParts";
-
+import OrderForm from "./OrderForm";
 const App = () => {
     return (
         <div className="container">
@@ -28,6 +28,10 @@ const appRouter=createBrowserRouter([
             {
                     path:"/newuser",
                     element:<NewUser/>,
+            },
+            {
+                path:"/",
+               element:<OrderForm/>,
             },
             {
                 path:"/updateuser",

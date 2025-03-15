@@ -1,12 +1,31 @@
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
-const app = express();
-const port = 3000;
-const cron = require("node-cron");
-//require('dotenv').config();
+import express from 'express';
+import mysql from 'mysql2';
+import cors from 'cors';
+import cron from 'node-cron';
+import dotenv from 'dotenv';
+import twilio from 'twilio';
 
-//const client = require("twilio")(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const port=3000;
+dotenv.config({ path: 'D:/Garage Project/src/components/.env' });
+
+
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root', // Update your MySQL username
+  password: 'arkadam-123', // Update your MySQL password
+  database: 'mydb', // Update with your database name
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+// Twilio Client
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+const app = express(); // ✅ Define `app` before using it
+
 
 // Enable CORS for the React frontend (localhost:1234)
 app.use(cors({
@@ -189,6 +208,69 @@ app.put('/inventory/updateparts/:id', (req, res) => {
   });
 });
 
+// start of order
+
+app.post('/orders', async (req, res) => {
+  let conn;
+  try {
+    conn = await pool.promise().getConnection();
+
+    const { user_id, date, parts } = req.body;
+    if (!user_id || !date || !parts || parts.length === 0) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    await conn.beginTransaction();
+
+    let totalAmount = 0;
+    for (const part of parts) {
+      const [partInfo] = await conn.query("SELECT price, quantity FROM inventory WHERE part_id = ?", [part.part_id]);
+      if (partInfo.length === 0) throw new Error(`Part ID ${part.part_id} not found`);
+      if (partInfo[0].quantity < part.quantity) throw new Error(`Insufficient stock for Part ID ${part.part_id}`);
+
+      totalAmount += partInfo[0].price * part.quantity;
+    }
+
+    // ✅ Insert into orders table
+    const [orderResult] = await conn.query(
+      "INSERT INTO orders (user_id, date, total_amount) VALUES (?, ?, ?)",
+      [user_id, date, totalAmount]
+    );
+
+    if (!orderResult.insertId) {
+      throw new Error('Failed to create order');
+    }
+    
+    const orderId = orderResult.insertId; // ✅ Make sure orderId is defined
+
+    for (const part of parts) {
+      const [partInfo] = await conn.query("SELECT price FROM inventory WHERE part_id = ?", [part.part_id]);
+
+      await conn.query(
+        "INSERT INTO order_details (order_id, user_id, part_id, quantity, price) VALUES (?, ?, ?, ?, ?)",
+        [orderId, user_id, part.part_id, part.quantity, partInfo[0].price]
+      );
+
+      await conn.query(
+        "UPDATE inventory SET quantity = quantity - ? WHERE part_id = ?",
+        [part.quantity, part.part_id]
+      );
+    }
+
+    await conn.commit();
+    res.status(201).json({ message: 'Order placed successfully', orderId });
+
+  } catch (error) {
+    if (conn) await conn.rollback();
+    console.error('Order Processing Error:', error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (conn) conn.release();
+  }
+});
+
+
+// end of order
 // Start server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

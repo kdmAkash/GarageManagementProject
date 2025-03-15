@@ -14,7 +14,7 @@ const ShowUser = () => {
           const data = await response.json();
           setUsers(data);
           setSearch(data);
-          console.log(data);
+          //console.log(data);
         } else {
           const errorData = await response.json();
           setError(`Error fetching users: ${errorData.error}`);
