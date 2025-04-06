@@ -7,7 +7,7 @@
     "frontend": "parcel index.html",
     "backend": "node src/components/server.js",
     "start": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "build": "parcel build index.html &&  npm run backend"
+    "build": "parcel build index.html"
   },
   "keywords": [
     "akki"
