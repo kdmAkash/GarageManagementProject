@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import twilio from 'twilio';
 
 const port=3000;
-dotenv.config({ path: 'D:/Garage Project/src/components/.env' });
+//dotenv.config({ path: 'D:/Garage Project/src/components/.env' });
 
 
 const pool = mysql.createPool({
@@ -20,10 +20,10 @@ const pool = mysql.createPool({
 });
 
 // Twilio Client
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+//const client = twilio(
+  //process.env.TWILIO_ACCOUNT_SID,
+  //process.env.TWILIO_AUTH_TOKEN
+//);
 const app = express(); // ✅ Define `app` before using it
 
 
